@@ -2,4 +2,6 @@
 
 import Cli from '../src/cli.js';
 
-new Cli();
+const cli = new Cli();
+
+cli.init();

@@ -11,10 +11,23 @@ export default class Cli {
   constructor() {
     const version = this.constructor.getAppVersion();
 
-    const program = new Command();
+    this.program = new Command();
 
-    program.version(version, '-v, --version');
+    this.setVersion(version);
+    this.setArguments();
+  }
 
-    program.parse();
+  setVersion(version) {
+    this.program.version(version, '-V, --version');
+  }
+
+  setArguments() {
+    this.program
+      .arguments('<filepath1> <filepath2>')
+      .description('Compares two configuration files and shows a difference.');
+  }
+
+  init() {
+    this.program.parse();
   }
 };
