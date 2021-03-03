@@ -1,5 +1,5 @@
 #! /usr/bin/env node
 
-import cli from '../src/cli.js';
+import Cli from '../src/cli.js';
 
-cli.init();
+new Cli();
