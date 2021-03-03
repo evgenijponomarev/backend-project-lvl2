@@ -1,3 +1,5 @@
 #! /usr/bin/env node
 
-console.log('It\'s work');
+import cli from '../src/cli.js';
+
+cli.init();
