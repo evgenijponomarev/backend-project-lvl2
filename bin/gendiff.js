@@ -4,4 +4,4 @@ import Cli from '../src/cli.js';
 
 const cli = new Cli();
 
-cli.init();
+cli.init(process.argv);

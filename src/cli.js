@@ -21,6 +21,14 @@ export default class Cli {
     this.setOptions();
   }
 
+  init(args) {
+    this.program.parse(args);
+  }
+
+  getArguments() {
+    return this.program.args;
+  }
+
   setVersion(version) {
     this.program.version(version, '-V, --version');
   }
@@ -39,9 +47,5 @@ export default class Cli {
 
   setOptions() {
     this.program.option('-f, --format', 'output format');
-  }
-
-  init() {
-    this.program.parse();
   }
 };
