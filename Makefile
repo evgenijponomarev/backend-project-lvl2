@@ -5,4 +5,7 @@ gendiff:
 	node bin/gendiff.js
 
 lint:
-	npx eslint
+	npm run lint
+
+test:
+	npm run test
