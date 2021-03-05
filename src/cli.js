@@ -1,51 +1,34 @@
-import fs from 'fs';
-
 import { Command } from 'commander/esm.mjs';
 
-export default class Cli {
-  static getPackageVersion() {
-    const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+import getFileContent from './get-file-content.js';
 
-    return version;
-  }
+function getVersionFromPackageJson() {
+  const packageJsonContent = getFileContent('package.json');
+  const { version } = JSON.parse(packageJsonContent);
 
-  constructor() {
-    const version = this.constructor.getPackageVersion();
+  return version;
+}
 
-    this.program = new Command();
+function init(args) {
+  const version = getVersionFromPackageJson();
+  const program = new Command();
 
-    this.setVersion(version);
-    this.setHelpCommand();
-    this.setDescription();
-    this.setArguments();
-    this.setOptions();
-  }
+  program
+    .version(version, '-V, --version')
+    .helpOption('-h, --help', 'output usage information')
+    .description('Compares two configuration files and shows a difference.')
+    .arguments('<filepath1> <filepath2>')
+    .option('-f, --format', 'output format')
+    .parse(args);
 
-  init(args) {
-    this.program.parse(args);
-  }
+  return program;
+}
 
-  getArguments() {
-    return this.program.args;
-  }
+function getProgramArguments(program) {
+  return program.args;
+}
 
-  setVersion(version) {
-    this.program.version(version, '-V, --version');
-  }
-
-  setHelpCommand() {
-    this.program.helpOption('-h, --help', 'output usage information');
-  }
-
-  setArguments() {
-    this.program.arguments('<filepath1> <filepath2>');
-  }
-
-  setDescription() {
-    this.program.description('Compares two configuration files and shows a difference.');
-  }
-
-  setOptions() {
-    this.program.option('-f, --format', 'output format');
-  }
+export default {
+  init,
+  getProgramArguments,
 };

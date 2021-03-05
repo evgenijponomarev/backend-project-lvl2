@@ -1,19 +1,23 @@
-import Cli from '../src/cli.js';
+import cli from '../src/cli.js';
+import { Command } from 'commander/esm.mjs';
 
-test('Constructor', function() {
-  const cli = new Cli();
+let processArgs;
 
-  expect(cli).toBeInstanceOf(Cli);
+beforeAll(function() {
+  processArgs = process.argv.slice(0, 2);
 });
 
-test('getArguments', function() {
-  const cli = new Cli();
+test('Init returns instance of programmator', function() {
+  const program = cli.init(processArgs);
 
-  cli.init([...process.argv, 'arg1', 'arg2']);
+  expect(program).toBeInstanceOf(Command);
+});
 
-  const args = cli.getArguments();
+test('GetArguments returns passed arguments', function() {
+  const args = ['arg1', 'arg2'];
+  const program = cli.init([...processArgs, ...args]);
+  const returnedArgs = cli.getProgramArguments(program);
 
-  expect(args).toHaveLength(2);
-  expect(args).toContain('arg1');
-  expect(args).toContain('arg2');
+  expect(returnedArgs).toHaveLength(2);
+  expect(returnedArgs).toEqual(expect.arrayContaining(args));
 });
