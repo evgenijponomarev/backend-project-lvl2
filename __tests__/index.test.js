@@ -96,7 +96,7 @@ describe('Compare objects', () => {
   });
 });
 
-describe('Compare json', () => {
+describe('Compare json strings', () => {
   test('Flat', () => {
     const json1 = JSON.stringify(obj1);
     const json2 = JSON.stringify(obj2);
