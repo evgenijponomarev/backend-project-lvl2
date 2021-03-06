@@ -31,7 +31,7 @@ function formatDiff(diff, format) {
   }
 }
 
-function getObjectKeyDiff(obj1, obj2, key) {
+function getObjectFieldDiff(obj1, obj2, key) {
   const issetIn1 = Object.prototype.hasOwnProperty.call(obj1, key);
   const issetIn2 = Object.prototype.hasOwnProperty.call(obj2, key);
   const result = {};
@@ -54,7 +54,7 @@ function getObjectsDiff(obj1, obj2, format) {
 
   const diff = allKeys.reduce((acc, key) => ({
     ...acc,
-    [key]: getObjectKeyDiff(obj1, obj2, key),
+    [key]: getObjectFieldDiff(obj1, obj2, key),
   }), {});
 
   return formatDiff(diff, format);
