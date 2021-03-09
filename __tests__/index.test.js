@@ -76,8 +76,8 @@ const stylishFormattedExpectation = `{
   + field4: value4
 }`;
 
-describe('Compare objects', () => {
-  test('Flat', () => {
+describe('Compare flat objects', () => {
+  test('All fields have defined value', () => {
     const diff = getObjectsDiff(obj1, obj2);
 
     expect(diff).toEqual(expectation1);
@@ -89,26 +89,15 @@ describe('Compare objects', () => {
     expect(diff).toEqual(expectation2);
   });
 
-  test('prototype field override', () => {
+  test('Prototype\'s field override', () => {
     const diff = getObjectsDiff(obj5, obj6);
 
     expect(diff).toEqual(expectation3);
   });
 });
 
-describe('Compare json strings', () => {
-  test('Flat', () => {
-    const json1 = JSON.stringify(obj1);
-    const json2 = JSON.stringify(obj2);
-
-    const diff = getJsonDiff(json1, json2);
-
-    expect(diff).toEqual(expectation1);
-  });
-});
-
-describe('Compare json files', () => {
-  test('Flat', () => {
+describe('Compare flat json', () => {
+  test('Without formatting', () => {
     const filepath1 = '__fixtures__/sample1.json';
     const filepath2 = '__fixtures__/sample2.json';
 
@@ -116,10 +105,8 @@ describe('Compare json files', () => {
 
     expect(diff).toEqual(expectation1);
   });
-});
 
-describe('Compare files with format result', () => {
-  test('Flat', () => {
+  test('With formatting to stylish', () => {
     const filepath1 = '__fixtures__/sample1.json';
     const filepath2 = '__fixtures__/sample2.json';
 
