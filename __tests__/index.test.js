@@ -115,3 +115,23 @@ describe('Compare flat json', () => {
     expect(diff).toEqual(stylishFormattedExpectation);
   });
 });
+
+describe('Compare flat yaml', () => {
+  test('Without formatting', () => {
+    const filepath1 = '__fixtures__/sample1.yml';
+    const filepath2 = '__fixtures__/sample2.yml';
+
+    const diff = getFilesDiff(filepath1, filepath2);
+
+    expect(diff).toEqual(expectation1);
+  });
+
+  test('With formatting to stylish', () => {
+    const filepath1 = '__fixtures__/sample1.yml';
+    const filepath2 = '__fixtures__/sample2.yml';
+
+    const diff = getFilesDiff(filepath1, filepath2, 'stylish');
+
+    expect(diff).toEqual(stylishFormattedExpectation);
+  });
+});
