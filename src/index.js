@@ -1,7 +1,5 @@
-import path from 'path';
 import union from 'lodash/union.js';
-import jsYaml from 'js-yaml';
-import getFileContent from './get-file-content.js';
+import parseDataFromFile from './parsers.js';
 
 function formatDiffToStylish(diff) {
   const entries = Object.entries(diff);
@@ -60,15 +58,6 @@ function getObjectsDiff(obj1, obj2, format) {
   }), {});
 
   return formatDiff(diff, format);
-}
-
-function parseDataFromFile(filepath) {
-  const ext = path.extname(filepath);
-  const content = getFileContent(filepath);
-
-  if (ext === '.json') return JSON.parse(content);
-  if (ext === '.yml') return jsYaml.load(content);
-  return null;
 }
 
 function getFilesDiff(filepath1, filepath2, format) {
