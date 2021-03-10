@@ -18,7 +18,7 @@ test('Init returns instance of programmator', () => {
 test('GetArguments returns passed arguments', () => {
   const args = ['arg1', 'arg2'];
   const program = cli.init([...processArgs, ...args]);
-  const returnedArgs = cli.getProgramArguments(program);
+  const returnedArgs = cli.getArguments(program);
 
   expect(returnedArgs).toHaveLength(2);
   expect(returnedArgs).toEqual(expect.arrayContaining(args));

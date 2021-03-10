@@ -1,16 +1,20 @@
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { Command } from 'commander/esm.mjs';
+import parse from './parser.js';
 
-import getFileContent from './get-file-content.js';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-function getVersionFromPackageJson() {
-  const packageJsonContent = getFileContent('package.json');
-  const { version } = JSON.parse(packageJsonContent);
+function getPackageVersion(configPath) {
+  const { version } = parse(configPath);
 
   return version;
 }
 
 function init(args) {
-  const version = getVersionFromPackageJson();
+  const configPath = path.join(__dirname, '..', 'package.json');
+  const version = getPackageVersion(configPath);
   const program = new Command();
 
   program
@@ -24,11 +28,16 @@ function init(args) {
   return program;
 }
 
-function getProgramArguments(program) {
+function getArguments(program) {
   return program.args;
+}
+
+function printHelp(program) {
+  program.help();
 }
 
 export default {
   init,
-  getProgramArguments,
+  getArguments,
+  printHelp,
 };

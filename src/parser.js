@@ -1,12 +1,14 @@
 import path from 'path';
+import fs from 'fs';
 import jsYaml from 'js-yaml';
-import getFileContent from './get-file-content.js';
 
-export default function parseDataFromFile(filepath) {
+export default function parse(filepath) {
   const ext = path.extname(filepath);
-  const content = getFileContent(filepath);
+  const content = fs.readFileSync(filepath, 'utf-8');
 
   if (ext === '.json') return JSON.parse(content);
+
   if (ext === '.yml') return jsYaml.load(content);
-  return null;
+
+  throw new Error('Unexpected format of file. Expect json or yml.');
 }

@@ -1,35 +1,6 @@
 import union from 'lodash/union.js';
-import parseDataFromFile from './parsers.js';
-
-function formatDiffToStylish(diff) {
-  const entries = Object.entries(diff);
-
-  const result = entries.map(([key, value]) => {
-    const resultLine = {
-      unchanged: `    ${key}: ${value.newValue}`,
-      added: `  + ${key}: ${value.newValue}`,
-      deleted: `  - ${key}: ${value.currentValue}`,
-      changed: [
-        `  - ${key}: ${value.currentValue}`,
-        `  + ${key}: ${value.newValue}`,
-      ].join('\n'),
-    };
-
-    return resultLine[value.status];
-  }).join('\n');
-
-  return `{\n${result}\n}`;
-}
-
-function formatDiff(diff, format) {
-  switch (format) {
-    case 'stylish':
-      return formatDiffToStylish(diff);
-
-    default:
-      return diff;
-  }
-}
+import parse from './parser.js';
+import formatDiff from './formatter.js';
 
 function getObjectFieldDiff(obj1, obj2, key) {
   const issetIn1 = Object.prototype.hasOwnProperty.call(obj1, key);
@@ -61,10 +32,10 @@ function getObjectsDiff(obj1, obj2, format) {
 }
 
 function getFilesDiff(filepath1, filepath2, format) {
-  const file1Content = parseDataFromFile(filepath1);
-  const file2Content = parseDataFromFile(filepath2);
+  const obj1 = parse(filepath1);
+  const obj2 = parse(filepath2);
 
-  return getObjectsDiff(file1Content, file2Content, format);
+  return getObjectsDiff(obj1, obj2, format);
 }
 
 export default getFilesDiff;
