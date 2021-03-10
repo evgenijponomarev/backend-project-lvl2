@@ -67,9 +67,4 @@ function getFilesDiff(filepath1, filepath2, format) {
   return getObjectsDiff(file1Content, file2Content, format);
 }
 
-export {
-  getFilesDiff,
-  getObjectsDiff,
-};
-
 export default getFilesDiff;
