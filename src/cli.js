@@ -22,7 +22,7 @@ function init(args) {
     .helpOption('-h, --help', 'output usage information')
     .description('Compares two configuration files and shows a difference.')
     .arguments('<filepath1> <filepath2>')
-    .option('-f, --format', 'output format')
+    .option('-f, --format', 'output format', 'stylish')
     .parse(args);
 
   return program;
@@ -32,6 +32,10 @@ function getArguments(program) {
   return program.args;
 }
 
+function getOptions(program) {
+  return program.opts();
+}
+
 function printHelp(program) {
   program.help();
 }
@@ -39,5 +43,6 @@ function printHelp(program) {
 export default {
   init,
   getArguments,
+  getOptions,
   printHelp,
 };

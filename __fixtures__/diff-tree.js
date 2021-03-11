@@ -12,12 +12,12 @@ export default [
         value: 'Value 1',
       },
       {
-        process: 'delete',
+        process: 'del',
         key: 'setting2',
         value: 200,
       },
       {
-        process: 'delete',
+        process: 'del',
         key: 'setting3',
         value: true,
       },
@@ -48,7 +48,7 @@ export default [
             key: 'doge',
             value: [
               {
-                process: 'delete',
+                process: 'del',
                 key: 'wow',
                 value: '',
               },
@@ -76,7 +76,7 @@ export default [
     key: 'group1',
     value: [
       {
-        process: 'delete',
+        process: 'del',
         key: 'baz',
         value: 'bas',
       },
@@ -90,7 +90,7 @@ export default [
         value: 'bar',
       },
       {
-        process: 'delete',
+        process: 'del',
         key: 'nest',
         value: [
           {
@@ -107,7 +107,7 @@ export default [
     ],
   },
   {
-    process: 'delete',
+    process: 'del',
     key: 'group2',
     value: [
       {

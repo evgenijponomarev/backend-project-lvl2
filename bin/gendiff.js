@@ -10,6 +10,7 @@ const __dirname = dirname(__filename);
 
 const program = cli.init();
 const args = cli.getArguments(program);
+const { format } = cli.getOptions(program);
 
 if (!args.length || args.length !== 2) {
   console.error('Error: unexpected count of arguments\n');
@@ -19,6 +20,6 @@ if (!args.length || args.length !== 2) {
 const [filepath1, filepath2] = args;
 const fullpath1 = path.join(__dirname, '..', filepath1);
 const fullpath2 = path.join(__dirname, '..', filepath2);
-const diff = getFilesDiff(fullpath1, fullpath2, 'stylish');
+const diff = getFilesDiff(fullpath1, fullpath2, format);
 
 console.log(diff);

@@ -15,12 +15,12 @@ describe('Compare json', () => {
   const filepath2 = path.join(__dirname, '..', '__fixtures__/file2.json');
 
   test('Plain object format', () => {
-    const diff = getFilesDiff(filepath1, filepath2);
+    const diff = getFilesDiff(filepath1, filepath2, 'schema');
     expect(diff).toEqual(diffTree);
   });
 
-  test.skip('Stylish format', () => {
-    const diff = getFilesDiff(filepath1, filepath2, 'stylish');
+  test('Stylish format', () => {
+    const diff = getFilesDiff(filepath1, filepath2);
     expect(diff).toEqual(diffStylish);
   });
 });
@@ -30,12 +30,12 @@ describe('Compare yaml', () => {
   const filepath2 = path.join(__dirname, '..', '__fixtures__/file2.yml');
 
   test('Plain object format', () => {
-    const diff = getFilesDiff(filepath1, filepath2);
+    const diff = getFilesDiff(filepath1, filepath2, 'schema');
     expect(diff).toEqual(diffTree);
   });
 
-  test.skip('Stylish format', () => {
-    const diff = getFilesDiff(filepath1, filepath2, 'stylish');
+  test('Stylish format', () => {
+    const diff = getFilesDiff(filepath1, filepath2);
     expect(diff).toEqual(diffStylish);
   });
 });

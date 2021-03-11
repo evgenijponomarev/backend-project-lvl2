@@ -1,7 +1,8 @@
 import uniq from 'lodash/uniq.js';
 import isObject from 'lodash/isObject.js';
+import isArray from 'lodash/isArray.js';
 import parse from './parser.js';
-import formatDiff from './formatter.js';
+import formatDiff from './formatters.js';
 
 function getObjectSchema(obj) {
   return Object.entries(obj).reduce((acc, [key, value]) => [
@@ -31,7 +32,7 @@ function getDiffSchema(schema1, schema2) {
 
     if (!schema2Field) {
       return {
-        process: 'delete',
+        process: 'del',
         ...schema1Field,
       };
     }
@@ -40,7 +41,7 @@ function getDiffSchema(schema1, schema2) {
       return schema1Field;
     }
 
-    if (isObject(schema1Field.value) && isObject(schema2Field.value)) {
+    if (isArray(schema1Field.value) && isArray(schema2Field.value)) {
       return {
         ...schema1Field,
         value: getDiffSchema(schema1Field.value, schema2Field.value),
@@ -49,7 +50,7 @@ function getDiffSchema(schema1, schema2) {
 
     return [
       {
-        process: 'delete',
+        process: 'del',
         ...schema1Field,
       },
       {
