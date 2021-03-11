@@ -15,10 +15,6 @@
 
 ### Codeclimate test coverage status
 [![Test Coverage](https://api.codeclimate.com/v1/badges/57da66f46da020265d01/test_coverage)](https://codeclimate.com/github/evgeniy1801/backend-project-lvl2/test_coverage)
-### Compare json files
+### Demo
 
-[![asciicast](https://asciinema.org/a/ITltdTjjjCbjxpBL4oevqgbNN.svg)](https://asciinema.org/a/ITltdTjjjCbjxpBL4oevqgbNN)
-
-### Compare yaml files
-
-[![asciicast](https://asciinema.org/a/zLoLp6IuHH6iYUimi8thLbEUY.svg)](https://asciinema.org/a/zLoLp6IuHH6iYUimi8thLbEUY)
+[![asciicast](https://asciinema.org/a/TO4ljNpgmo1DVrUTaPg8EwtIK.svg)](https://asciinema.org/a/TO4ljNpgmo1DVrUTaPg8EwtIK)
