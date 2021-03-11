@@ -10,5 +10,8 @@ lint:
 test:
 	npm run test
 
+test-live:
+	npm run test-live
+
 test-coverage:
 	npm run test-coverage

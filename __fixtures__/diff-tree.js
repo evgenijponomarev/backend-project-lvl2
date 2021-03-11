@@ -1,7 +1,7 @@
 export default [
   {
     key: 'common',
-    fields: [
+    value: [
       {
         process: 'add',
         key: 'follow',
@@ -34,7 +34,7 @@ export default [
       {
         process: 'add',
         key: 'setting5',
-        fields: [
+        value: [
           {
             key: 'key5',
             value: 'value5',
@@ -43,10 +43,10 @@ export default [
       },
       {
         key: 'setting6',
-        fields: [
+        value: [
           {
             key: 'doge',
-            fields: [
+            value: [
               {
                 process: 'delete',
                 key: 'wow',
@@ -74,7 +74,7 @@ export default [
   },
   {
     key: 'group1',
-    fields: [
+    value: [
       {
         process: 'delete',
         key: 'baz',
@@ -92,7 +92,7 @@ export default [
       {
         process: 'delete',
         key: 'nest',
-        fields: [
+        value: [
           {
             key: 'key',
             value: 'value',
@@ -109,14 +109,14 @@ export default [
   {
     process: 'delete',
     key: 'group2',
-    fields: [
+    value: [
       {
         key: 'abc',
         value: 12345,
       },
       {
         key: 'deep',
-        fields: [
+        value: [
           {
             key: 'id',
             value: 45,
@@ -128,13 +128,13 @@ export default [
   {
     process: 'add',
     key: 'group3',
-    fields: [
+    value: [
       {
         key: 'deep',
-        fields: [
+        value: [
           {
             key: 'id',
-            fields: [
+            value: [
               {
                 key: 'number',
                 value: 45,

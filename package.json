@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "npx jest",
+    "test-live": "npx jest --watchAll",
     "test-coverage": "npx jest --coverage",
     "lint": "npx eslint ."
   },

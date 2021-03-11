@@ -1,34 +1,71 @@
-import union from 'lodash/union.js';
+import uniq from 'lodash/uniq.js';
+import isObject from 'lodash/isObject.js';
 import parse from './parser.js';
 import formatDiff from './formatter.js';
 
-function getObjectFieldDiff(obj1, obj2, key) {
-  const issetIn1 = Object.prototype.hasOwnProperty.call(obj1, key);
-  const issetIn2 = Object.prototype.hasOwnProperty.call(obj2, key);
-  const result = {};
+function getObjectSchema(obj) {
+  return Object.entries(obj).reduce((acc, [key, value]) => [
+    ...acc,
+    {
+      key,
+      value: isObject(value) ? getObjectSchema(value) : value,
+    },
+  ], []);
+}
 
-  if (issetIn1) result.currentValue = obj1[key];
-  if (issetIn2) result.newValue = obj2[key];
+function getDiffSchema(schema1, schema2) {
+  const schema1Keys = schema1.map(({ key }) => key);
+  const schema2Keys = schema2.map(({ key }) => key);
+  const allKeys = uniq([...schema1Keys, ...schema2Keys]).sort();
 
-  if (issetIn1 && !issetIn2) result.status = 'deleted';
-  else if (!issetIn1 && issetIn2) result.status = 'added';
-  else if (obj1[key] === obj2[key]) result.status = 'unchanged';
-  else result.status = 'changed';
+  return allKeys.flatMap((key) => {
+    const schema1Field = schema1.find((field) => field.key === key);
+    const schema2Field = schema2.find((field) => field.key === key);
 
-  return result;
+    if (!schema1Field) {
+      return {
+        process: 'add',
+        ...schema2Field,
+      };
+    }
+
+    if (!schema2Field) {
+      return {
+        process: 'delete',
+        ...schema1Field,
+      };
+    }
+
+    if (schema1Field.value === schema2Field.value) {
+      return schema1Field;
+    }
+
+    if (isObject(schema1Field.value) && isObject(schema2Field.value)) {
+      return {
+        ...schema1Field,
+        value: getDiffSchema(schema1Field.value, schema2Field.value),
+      };
+    }
+
+    return [
+      {
+        process: 'delete',
+        ...schema1Field,
+      },
+      {
+        process: 'add',
+        ...schema2Field,
+      },
+    ];
+  });
 }
 
 function getObjectsDiff(obj1, obj2, format) {
-  const obj1Keys = Object.keys(obj1);
-  const obj2Keys = Object.keys(obj2);
-  const allKeys = union(obj1Keys, obj2Keys);
+  const schema1 = getObjectSchema(obj1);
+  const schema2 = getObjectSchema(obj2);
+  const diffSchema = getDiffSchema(schema1, schema2);
 
-  const diff = allKeys.reduce((acc, key) => ({
-    ...acc,
-    [key]: getObjectFieldDiff(obj1, obj2, key),
-  }), {});
-
-  return formatDiff(diff, format);
+  return formatDiff(diffSchema, format);
 }
 
 function getFilesDiff(filepath1, filepath2, format) {
