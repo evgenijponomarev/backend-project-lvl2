@@ -1,8 +1,7 @@
 import uniq from 'lodash/uniq.js';
 import isObject from 'lodash/isObject.js';
-import isArray from 'lodash/isArray.js';
 import parse from './parser.js';
-import formatDiff from './formatters.js';
+import formatDiff from './formatters/index.js';
 
 function getObjectSchema(obj) {
   return Object.entries(obj).reduce((acc, [key, value]) => [
@@ -14,66 +13,62 @@ function getObjectSchema(obj) {
   ], []);
 }
 
-function getDiffSchema(schema1, schema2) {
-  const schema1Keys = schema1.map(({ key }) => key);
-  const schema2Keys = schema2.map(({ key }) => key);
-  const allKeys = uniq([...schema1Keys, ...schema2Keys]).sort();
+function getDiffSchema(obj1, obj2) {
+  const obj1Keys = Object.keys(obj1);
+  const obj2Keys = Object.keys(obj2);
+  const allKeys = uniq([...obj1Keys, ...obj2Keys]).sort();
 
-  return allKeys.flatMap((key) => {
-    const schema1Field = schema1.find((field) => field.key === key);
-    const schema2Field = schema2.find((field) => field.key === key);
+  return allKeys.map((key) => {
+    const value1 = obj1[key];
+    const value2 = obj2[key];
 
-    if (!schema1Field) {
+    if (value1 === value2) {
       return {
-        process: 'add',
-        ...schema2Field,
+        key,
+        value: value1,
       };
     }
 
-    if (!schema2Field) {
+    if (!obj1Keys.includes(key)) {
       return {
-        process: 'del',
-        ...schema1Field,
+        status: 'added',
+        key,
+        value: isObject(value2) ? getObjectSchema(value2) : value2,
       };
     }
 
-    if (schema1Field.value === schema2Field.value) {
-      return schema1Field;
-    }
-
-    if (isArray(schema1Field.value) && isArray(schema2Field.value)) {
+    if (!obj2Keys.includes(key)) {
       return {
-        ...schema1Field,
-        value: getDiffSchema(schema1Field.value, schema2Field.value),
+        status: 'removed',
+        key,
+        value: isObject(value1) ? getObjectSchema(value1) : value1,
       };
     }
 
-    return [
-      {
-        process: 'del',
-        ...schema1Field,
+    if (isObject(value1) && isObject(value2)) {
+      return {
+        key,
+        value: getDiffSchema(value1, value2),
+      };
+    }
+
+    return {
+      status: 'changed',
+      key,
+      value: {
+        old: isObject(value1) ? getObjectSchema(value1) : value1,
+        new: isObject(value2) ? getObjectSchema(value2) : value2,
       },
-      {
-        process: 'add',
-        ...schema2Field,
-      },
-    ];
+    };
   });
-}
-
-function getObjectsDiff(obj1, obj2, format) {
-  const schema1 = getObjectSchema(obj1);
-  const schema2 = getObjectSchema(obj2);
-  const diffSchema = getDiffSchema(schema1, schema2);
-
-  return formatDiff(diffSchema, format);
 }
 
 function getFilesDiff(filepath1, filepath2, format) {
   const obj1 = parse(filepath1);
   const obj2 = parse(filepath2);
+  const diffSchema = getDiffSchema(obj1, obj2);
 
-  return getObjectsDiff(obj1, obj2, format);
+  return formatDiff(diffSchema, format);
 }
 
 export default getFilesDiff;

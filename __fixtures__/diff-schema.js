@@ -3,7 +3,7 @@ export default [
     key: 'common',
     value: [
       {
-        process: 'add',
+        status: 'added',
         key: 'follow',
         value: false,
       },
@@ -12,27 +12,25 @@ export default [
         value: 'Value 1',
       },
       {
-        process: 'del',
+        status: 'removed',
         key: 'setting2',
         value: 200,
       },
       {
-        process: 'del',
+        status: 'changed',
         key: 'setting3',
-        value: true,
+        value: {
+          old: true,
+          new: null,
+        },
       },
       {
-        process: 'add',
-        key: 'setting3',
-        value: null,
-      },
-      {
-        process: 'add',
+        status: 'added',
         key: 'setting4',
         value: 'blah blah',
       },
       {
-        process: 'add',
+        status: 'added',
         key: 'setting5',
         value: [
           {
@@ -48,14 +46,12 @@ export default [
             key: 'doge',
             value: [
               {
-                process: 'del',
+                status: 'changed',
                 key: 'wow',
-                value: '',
-              },
-              {
-                process: 'add',
-                key: 'wow',
-                value: 'so much',
+                value: {
+                  old: '',
+                  new: 'so much',
+                },
               },
             ],
           },
@@ -64,7 +60,7 @@ export default [
             value: 'value',
           },
           {
-            process: 'add',
+            status: 'added',
             key: 'ops',
             value: 'vops',
           },
@@ -76,38 +72,34 @@ export default [
     key: 'group1',
     value: [
       {
-        process: 'del',
+        status: 'changed',
         key: 'baz',
-        value: 'bas',
-      },
-      {
-        process: 'add',
-        key: 'baz',
-        value: 'bars',
+        value: {
+          old: 'bas',
+          new: 'bars',
+        },
       },
       {
         key: 'foo',
         value: 'bar',
       },
       {
-        process: 'del',
+        status: 'changed',
         key: 'nest',
-        value: [
-          {
-            key: 'key',
-            value: 'value',
-          },
-        ],
-      },
-      {
-        process: 'add',
-        key: 'nest',
-        value: 'str',
+        value: {
+          old: [
+            {
+              key: 'key',
+              value: 'value',
+            },
+          ],
+          new: 'str',
+        },
       },
     ],
   },
   {
-    process: 'del',
+    status: 'removed',
     key: 'group2',
     value: [
       {
@@ -126,7 +118,7 @@ export default [
     ],
   },
   {
-    process: 'add',
+    status: 'added',
     key: 'group3',
     value: [
       {

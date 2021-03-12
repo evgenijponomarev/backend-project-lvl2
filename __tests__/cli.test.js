@@ -23,3 +23,10 @@ test('GetArguments returns passed arguments', () => {
   expect(returnedArgs).toHaveLength(2);
   expect(returnedArgs).toEqual(expect.arrayContaining(args));
 });
+
+test('GetOptions returns passed format', () => {
+  const program = cli.init([...processArgs, '-f', 'stylish']);
+  const options = cli.getOptions(program);
+
+  expect(options).toHaveProperty('format', 'stylish');
+});

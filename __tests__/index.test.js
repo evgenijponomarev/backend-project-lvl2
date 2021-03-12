@@ -4,8 +4,9 @@ import { fileURLToPath } from 'url';
 import { describe, test, expect } from '@jest/globals';
 import getFilesDiff from '../src/index';
 
-import diffTree from '../__fixtures__/diff-tree';
+import diffSchema from '../__fixtures__/diff-schema';
 import diffStylish from '../__fixtures__/diff-stylish';
+import diffPlain from '../__fixtures__/diff-plain';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,12 +17,17 @@ describe('Compare json', () => {
 
   test('Plain object format', () => {
     const diff = getFilesDiff(filepath1, filepath2, 'schema');
-    expect(diff).toEqual(diffTree);
+    expect(diff).toEqual(diffSchema);
   });
 
   test('Stylish format', () => {
     const diff = getFilesDiff(filepath1, filepath2);
     expect(diff).toEqual(diffStylish);
+  });
+
+  test.skip('Plain format', () => {
+    const diff = getFilesDiff(filepath1, filepath2, 'plain');
+    expect(diff).toEqual(diffPlain);
   });
 });
 
@@ -31,11 +37,16 @@ describe('Compare yaml', () => {
 
   test('Plain object format', () => {
     const diff = getFilesDiff(filepath1, filepath2, 'schema');
-    expect(diff).toEqual(diffTree);
+    expect(diff).toEqual(diffSchema);
   });
 
   test('Stylish format', () => {
     const diff = getFilesDiff(filepath1, filepath2);
     expect(diff).toEqual(diffStylish);
+  });
+
+  test.skip('Plain format', () => {
+    const diff = getFilesDiff(filepath1, filepath2, 'plain');
+    expect(diff).toEqual(diffPlain);
   });
 });
