@@ -2,9 +2,9 @@ import formatToStylish from './stylish.js';
 import formatToPlain from './plain.js';
 
 const formatters = {
-  schema: (diffSchema) => diffSchema,
   stylish: formatToStylish,
   plain: formatToPlain,
+  json: JSON.stringify,
 };
 
 function formatDiff(diffSchema, formatType = 'stylish') {
