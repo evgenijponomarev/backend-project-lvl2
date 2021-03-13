@@ -25,7 +25,7 @@ describe('Compare json', () => {
     expect(diff).toEqual(diffStylish);
   });
 
-  test.skip('Plain format', () => {
+  test('Plain format', () => {
     const diff = getFilesDiff(filepath1, filepath2, 'plain');
     expect(diff).toEqual(diffPlain);
   });
@@ -45,7 +45,7 @@ describe('Compare yaml', () => {
     expect(diff).toEqual(diffStylish);
   });
 
-  test.skip('Plain format', () => {
+  test('Plain format', () => {
     const diff = getFilesDiff(filepath1, filepath2, 'plain');
     expect(diff).toEqual(diffPlain);
   });
