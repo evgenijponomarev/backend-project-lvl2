@@ -2,24 +2,34 @@
 
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import cli from '../src/cli.js';
-import getFilesDiff from '../src/index.js';
+import { Command } from 'commander/esm.mjs';
+import parse from '../src/parser.js';
+import genDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const configPath = path.join(__dirname, '..', 'package.json');
+const { version } = parse(configPath);
+const program = new Command();
 
-const program = cli.init();
-const args = cli.getArguments(program);
-const { format } = cli.getOptions(program);
+function mainAction(filepath1, filepath2, { format }) {
+  const fullpath1 = path.join(__dirname, '..', filepath1);
+  const fullpath2 = path.join(__dirname, '..', filepath2);
 
-if (!args.length || args.length !== 2) {
-  console.error('Error: unexpected count of arguments\n');
-  cli.printHelp(program);
+  try {
+    const diff = genDiff(fullpath1, fullpath2, format);
+
+    console.log(diff);
+  } catch (e) {
+    console.log('Error:', e.message);
+  }
 }
 
-const [filepath1, filepath2] = args;
-const fullpath1 = path.join(__dirname, '..', filepath1);
-const fullpath2 = path.join(__dirname, '..', filepath2);
-const diff = getFilesDiff(fullpath1, fullpath2, format);
-
-console.log(diff);
+program
+  .version(version, '-V, --version')
+  .helpOption('-h, --help', 'output usage information')
+  .description('Compares two configuration files and shows a difference.')
+  .option('-f, --format <outputFormat>', 'output format', 'stylish')
+  .arguments('<filepath1> <filepath2>')
+  .action(mainAction)
+  .parse();

@@ -63,7 +63,7 @@ function getDiffSchema(obj1, obj2) {
   });
 }
 
-function getFilesDiff(filepath1, filepath2, format) {
+function genDiff(filepath1, filepath2, format) {
   const obj1 = parse(filepath1);
   const obj2 = parse(filepath2);
   const diffSchema = getDiffSchema(obj1, obj2);
@@ -71,4 +71,4 @@ function getFilesDiff(filepath1, filepath2, format) {
   return formatDiff(diffSchema, format);
 }
 
-export default getFilesDiff;
+export default genDiff;
