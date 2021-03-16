@@ -12,8 +12,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 describe('Compare json', () => {
-  const filepath1 = path.join(__dirname, '..', '__fixtures__/file1.json');
-  const filepath2 = path.join(__dirname, '..', '__fixtures__/file2.json');
+  const filepath1 = path.join(__dirname, '..', '__fixtures__', 'file1.json');
+  const filepath2 = path.join(__dirname, '..', '__fixtures__', 'file2.json');
 
   test('Stylish format', () => {
     const diff = genDiff(filepath1, filepath2, 'stylish');
@@ -32,8 +32,8 @@ describe('Compare json', () => {
 });
 
 describe('Compare yaml', () => {
-  const filepath1 = path.join(__dirname, '..', '__fixtures__/file1.yml');
-  const filepath2 = path.join(__dirname, '..', '__fixtures__/file2.yml');
+  const filepath1 = path.join(__dirname, '..', '__fixtures__', 'file1.yml');
+  const filepath2 = path.join(__dirname, '..', '__fixtures__', 'file2.yml');
 
   test('Stylish format', () => {
     const diff = genDiff(filepath1, filepath2, 'stylish');
