@@ -13,11 +13,8 @@ const { version } = parse(configPath);
 const program = new Command();
 
 function mainAction(filepath1, filepath2, { format }) {
-  const fullpath1 = path.join(__dirname, '..', filepath1);
-  const fullpath2 = path.join(__dirname, '..', filepath2);
-
   try {
-    const diff = genDiff(fullpath1, fullpath2, format);
+    const diff = genDiff(filepath1, filepath2, format);
 
     console.log(diff);
   } catch (e) {

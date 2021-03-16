@@ -1,4 +1,5 @@
 import uniq from 'lodash/uniq.js';
+import sortBy from 'lodash/sortBy.js';
 import isObject from 'lodash/isObject.js';
 import parse from './parser.js';
 import formatDiff from './formatters/index.js';
@@ -16,7 +17,7 @@ function getObjectSchema(obj) {
 function getDiffSchema(obj1, obj2) {
   const obj1Keys = Object.keys(obj1);
   const obj2Keys = Object.keys(obj2);
-  const allKeys = uniq([...obj1Keys, ...obj2Keys]).sort();
+  const allKeys = sortBy(uniq([...obj1Keys, ...obj2Keys]));
 
   return allKeys.map((key) => {
     const value1 = obj1[key];
