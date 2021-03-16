@@ -1,10 +1,9 @@
 # GenDiff
 
-Package for structured files comparing. You can get difference for json or yml files. Difference can be formatted in stylish, plain text, or json format.
-
-## Project checks
 [![hexlet-check](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/hexlet-check.yml)
 [![project-check](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/project-check.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/project-check.yml)
+
+Package for structured files comparing. You can get difference for json or yml files. Difference can be formatted in stylish, plain text, or json format.
 
 ## Install
 

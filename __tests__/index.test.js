@@ -11,42 +11,16 @@ import diffPlain from '../__fixtures__/diff-plain';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-describe('Compare json', () => {
-  const filepath1 = path.join(__dirname, '..', '__fixtures__', 'file1.json');
-  const filepath2 = path.join(__dirname, '..', '__fixtures__', 'file2.json');
+describe.each(['json', 'yml'])('Compare %p', (ext) => {
+  const filepath1 = path.join(__dirname, '..', '__fixtures__', `file1.${ext}`);
+  const filepath2 = path.join(__dirname, '..', '__fixtures__', `file2.${ext}`);
 
-  test('Stylish format', () => {
-    const diff = genDiff(filepath1, filepath2, 'stylish');
-    expect(diff).toEqual(diffStylish);
-  });
-
-  test('Plain format', () => {
-    const diff = genDiff(filepath1, filepath2, 'plain');
-    expect(diff).toEqual(diffPlain);
-  });
-
-  test('Json format', () => {
-    const diff = genDiff(filepath1, filepath2, 'json');
-    expect(diff).toEqual(diffJson);
-  });
-});
-
-describe('Compare yaml', () => {
-  const filepath1 = path.join(__dirname, '..', '__fixtures__', 'file1.yml');
-  const filepath2 = path.join(__dirname, '..', '__fixtures__', 'file2.yml');
-
-  test('Stylish format', () => {
-    const diff = genDiff(filepath1, filepath2, 'stylish');
-    expect(diff).toEqual(diffStylish);
-  });
-
-  test('Plain format', () => {
-    const diff = genDiff(filepath1, filepath2, 'plain');
-    expect(diff).toEqual(diffPlain);
-  });
-
-  test('Json format', () => {
-    const diff = genDiff(filepath1, filepath2, 'json');
-    expect(diff).toEqual(diffJson);
+  test.each([
+    ['stylish', diffStylish],
+    ['plain', diffPlain],
+    ['json', diffJson],
+  ])('%p format', (format, expectation) => {
+    const diff = genDiff(filepath1, filepath2, format);
+    expect(diff).toEqual(expectation);
   });
 });
