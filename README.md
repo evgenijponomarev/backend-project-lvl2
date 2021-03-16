@@ -1,20 +1,30 @@
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/evgeniy1801/backend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions)
+# GenDiff
 
-### Hexlet-check status:
+Package for structured files comparing. You can get difference for json or yml files. Difference can be formatted in stylish, plain text, or json format.
+
+## Project checks
 [![hexlet-check](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/hexlet-check.yml)
-
-### Lint status:
 [![lint](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/lint.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/lint.yml)
-
-### Tests status
 [![test](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/test.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/test.yml)
-
-### Codeclimate maintainability status
 [![Maintainability](https://api.codeclimate.com/v1/badges/57da66f46da020265d01/maintainability)](https://codeclimate.com/github/evgeniy1801/backend-project-lvl2/maintainability)
-
-### Codeclimate test coverage status
 [![Test Coverage](https://api.codeclimate.com/v1/badges/57da66f46da020265d01/test_coverage)](https://codeclimate.com/github/evgeniy1801/backend-project-lvl2/test_coverage)
+
+## Install
+
+`make install`
+
+## Run with fixtures
+
+`make run`
+
+## Run lint
+
+`make lint`
+
+## Run tests
+
+`make test`
+
 ## Demo
 
 ### Compare JSON
