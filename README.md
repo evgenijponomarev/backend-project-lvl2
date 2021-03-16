@@ -5,9 +5,13 @@
 
 Package for structured files comparing. You can get difference for json or yml files. Difference can be formatted in stylish, plain text, or json format.
 
-## Install
+## Install dependencies
 
 `make install`
+
+## Install like console program
+
+`make setup`
 
 ## Run with fixtures
 
