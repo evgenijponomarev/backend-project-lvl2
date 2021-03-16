@@ -1,10 +1,10 @@
-name: Test coverage
+name: project-check
 
 on: push
 
 jobs:
-  publishToCodeclimate:
-    name: Publish to code climate
+  check:
+    name: Check project
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -13,7 +13,13 @@ jobs:
       - name: Install deps
         run: make install
 
-      - name: Code Climate Coverage Action
+      - name: Run linter
+        run: make lint
+
+      - name: Run tests
+        run: make test
+
+      - name: Publish test-coverage to code climate
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

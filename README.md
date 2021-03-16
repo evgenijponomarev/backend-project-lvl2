@@ -4,10 +4,7 @@ Package for structured files comparing. You can get difference for json or yml f
 
 ## Project checks
 [![hexlet-check](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/hexlet-check.yml)
-[![lint](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/lint.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/lint.yml)
-[![test](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/test.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/test.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/57da66f46da020265d01/maintainability)](https://codeclimate.com/github/evgeniy1801/backend-project-lvl2/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/57da66f46da020265d01/test_coverage)](https://codeclimate.com/github/evgeniy1801/backend-project-lvl2/test_coverage)
+[![project-check](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/project-check.yml/badge.svg)](https://github.com/evgeniy1801/backend-project-lvl2/actions/workflows/project-check.yml)
 
 ## Install
 
