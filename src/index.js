@@ -1,8 +1,6 @@
 import uniq from 'lodash/uniq.js';
 import sortBy from 'lodash/sortBy.js';
 import isObject from 'lodash/isObject.js';
-import parse from './parser.js';
-import formatDiff from './formatters/index.js';
 
 function getObjectSchema(obj) {
   return Object.entries(obj).reduce((acc, [key, value]) => [
@@ -64,12 +62,4 @@ function getDiffSchema(obj1, obj2) {
   });
 }
 
-function genDiff(filepath1, filepath2, format) {
-  const obj1 = parse(filepath1);
-  const obj2 = parse(filepath2);
-  const diffSchema = getDiffSchema(obj1, obj2);
-
-  return formatDiff(diffSchema, format);
-}
-
-export default genDiff;
+export default getDiffSchema;

@@ -3,13 +3,13 @@
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { Command } from 'commander/esm.mjs';
-import parse from '../src/parser.js';
-import genDiff from '../src/index.js';
+import parseFile from '../src/parser.js';
+import genDiff from '../index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const configPath = path.join(__dirname, '..', 'package.json');
-const { version } = parse(configPath);
+const { version } = parseFile(configPath);
 const program = new Command();
 
 function mainAction(filepath1, filepath2, { format }) {

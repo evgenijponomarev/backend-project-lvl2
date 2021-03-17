@@ -7,7 +7,7 @@ const parsers = {
   yml: jsYaml.load,
 };
 
-export default function parse(filepath) {
+export default function parseFile(filepath) {
   const ext = path.extname(filepath).slice(1);
   const parser = parsers[ext];
 

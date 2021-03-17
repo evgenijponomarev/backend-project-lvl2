@@ -2,7 +2,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 import { describe, test, expect } from '@jest/globals';
-import genDiff from '../src/index';
+import genDiff from '../index';
 
 import diffJson from '../__fixtures__/diff-json';
 import diffStylish from '../__fixtures__/diff-stylish';
