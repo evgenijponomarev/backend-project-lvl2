@@ -7,12 +7,10 @@ const formatters = {
   json: JSON.stringify,
 };
 
-function formatDiff(diffSchema, formatType = 'stylish') {
+export default (diffSchema, formatType = 'stylish') => {
   const formatter = formatters[formatType];
 
   if (!formatter) throw new Error('Unexpected format');
 
   return formatter(diffSchema);
-}
-
-export default formatDiff;
+};

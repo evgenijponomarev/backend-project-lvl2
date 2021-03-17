@@ -1,15 +1,15 @@
 import isArray from 'lodash/isArray.js';
 import compact from 'lodash/compact.js';
 
-function formatValue(value) {
+const formatValue = (value) => {
   if (typeof value === 'string') return `'${value}'`;
 
   if (isArray(value)) return '[complex value]';
 
   return value;
-}
+};
 
-function formatToPlain(diffSchema, keys = []) {
+const formatToPlain = (diffSchema, keys = []) => {
   const diff = diffSchema.map(({ key, value, status }) => {
     const newKeys = [...keys, key];
     const keyPath = newKeys.join('.');
@@ -34,6 +34,6 @@ function formatToPlain(diffSchema, keys = []) {
   });
 
   return compact(diff).join('\n');
-}
+};
 
 export default formatToPlain;

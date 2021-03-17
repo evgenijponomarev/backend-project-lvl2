@@ -8,14 +8,14 @@ const statusSign = {
 
 const indent = '  ';
 
-function getStylishLine(indentCount, key, value, status = 'none') {
+const getStylishLine = (indentCount, key, value, status = 'none') => {
   const sign = statusSign[status];
   const prefix = `${sign}${indent.slice(sign.length)}`;
 
   return `${indent.repeat(indentCount)}${prefix}${key}: ${value}`;
-}
+};
 
-function formatToStylish(diffSchema, indentCount = 0) {
+const formatToStylish = (diffSchema, indentCount = 0) => {
   const formatValue = (v) => (isArray(v) ? formatToStylish(v, indentCount + 2) : v);
 
   const diff = diffSchema.flatMap(({ key, value, status }) => (
@@ -32,6 +32,6 @@ function formatToStylish(diffSchema, indentCount = 0) {
     diff.join('\n'),
     `${indent.repeat(indentCount)}}`,
   ].join('\n');
-}
+};
 
 export default formatToStylish;

@@ -2,17 +2,19 @@ import uniq from 'lodash/uniq.js';
 import sortBy from 'lodash/sortBy.js';
 import isObject from 'lodash/isObject.js';
 
-function getObjectSchema(obj) {
-  return Object.entries(obj).reduce((acc, [key, value]) => [
+const getObjectSchema = (obj) => {
+  const entries = Object.entries(obj);
+
+  return entries.reduce((acc, [key, value]) => [
     ...acc,
     {
       key,
       value: isObject(value) ? getObjectSchema(value) : value,
     },
   ], []);
-}
+};
 
-function getDiffSchema(obj1, obj2) {
+const getDiffSchema = (obj1, obj2) => {
   const obj1Keys = Object.keys(obj1);
   const obj2Keys = Object.keys(obj2);
   const allKeys = sortBy(uniq([...obj1Keys, ...obj2Keys]));
@@ -60,6 +62,6 @@ function getDiffSchema(obj1, obj2) {
       },
     };
   });
-}
+};
 
 export default getDiffSchema;
