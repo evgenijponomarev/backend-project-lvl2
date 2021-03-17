@@ -1,6 +1,6 @@
-import uniq from 'lodash/uniq.js';
-import sortBy from 'lodash/sortBy.js';
-import isObject from 'lodash/isObject.js';
+import _ from 'lodash';
+
+const { uniq, sortBy, isObject } = _;
 
 const getObjectSchema = (obj) => {
   const entries = Object.entries(obj);

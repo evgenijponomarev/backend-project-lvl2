@@ -1,5 +1,6 @@
-import isArray from 'lodash/isArray.js';
-import compact from 'lodash/compact.js';
+import _ from 'lodash';
+
+const { isArray, compact } = _;
 
 const formatValue = (value) => {
   if (typeof value === 'string') return `'${value}'`;

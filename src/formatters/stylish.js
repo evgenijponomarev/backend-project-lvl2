@@ -1,4 +1,6 @@
-import isArray from 'lodash/isArray.js';
+import _ from 'lodash';
+
+const { isArray } = _;
 
 const statusSign = {
   added: '+',
