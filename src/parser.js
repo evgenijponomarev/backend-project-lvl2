@@ -1,5 +1,3 @@
-import path from 'path';
-import fs from 'fs';
 import jsYaml from 'js-yaml';
 
 const parsers = {
@@ -7,13 +5,10 @@ const parsers = {
   yml: jsYaml.load,
 };
 
-export default (filepath) => {
-  const ext = path.extname(filepath).slice(1);
-  const parser = parsers[ext];
+export default (data, format) => {
+  const parser = parsers[format];
 
-  if (!parser) throw new Error(`Unexpected format of file. Expected json or yml, recieved ${ext}`);
+  if (!parser) throw new Error(`Unexpected format of file. Expected json or yml, recieved ${format}`);
 
-  const content = fs.readFileSync(filepath, 'utf-8');
-
-  return parser(content);
+  return parser(data);
 };
