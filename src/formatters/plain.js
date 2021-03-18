@@ -11,19 +11,19 @@ const formatValue = (value) => {
 };
 
 const formatToPlain = (diffSchema, keys = []) => {
-  const diff = diffSchema.map(({ key, value, status }) => {
+  const diff = diffSchema.map(({ key, value, type }) => {
     const newKeys = [...keys, key];
     const keyPath = newKeys.join('.');
 
-    if (status === 'removed') {
+    if (type === 'removed') {
       return `Property '${keyPath}' was removed`;
     }
 
-    if (status === 'added') {
+    if (type === 'added') {
       return `Property '${keyPath}' was added with value: ${formatValue(value)}`;
     }
 
-    if (status === 'changed') {
+    if (type === 'changed') {
       return `Property '${keyPath}' was updated. From ${formatValue(value.old)} to ${formatValue(value.new)}`;
     }
 
