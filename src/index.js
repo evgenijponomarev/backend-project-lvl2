@@ -2,18 +2,6 @@ import _ from 'lodash';
 
 const { uniq, sortBy, isObject } = _;
 
-const getObjectSchema = (obj) => {
-  const entries = Object.entries(obj);
-
-  return entries.reduce((acc, [key, value]) => [
-    ...acc,
-    {
-      key,
-      value: isObject(value) ? getObjectSchema(value) : value,
-    },
-  ], []);
-};
-
 const getDiffSchema = (obj1, obj2) => {
   const obj1Keys = Object.keys(obj1);
   const obj2Keys = Object.keys(obj2);
@@ -22,6 +10,13 @@ const getDiffSchema = (obj1, obj2) => {
   return allKeys.map((key) => {
     const value1 = obj1[key];
     const value2 = obj2[key];
+
+    if (isObject(value1) && isObject(value2)) {
+      return {
+        key,
+        value: getDiffSchema(value1, value2),
+      };
+    }
 
     if (value1 === value2) {
       return {
@@ -34,7 +29,7 @@ const getDiffSchema = (obj1, obj2) => {
       return {
         status: 'added',
         key,
-        value: isObject(value2) ? getObjectSchema(value2) : value2,
+        value: isObject(value2) ? getDiffSchema(value2, value2) : value2,
       };
     }
 
@@ -42,14 +37,7 @@ const getDiffSchema = (obj1, obj2) => {
       return {
         status: 'removed',
         key,
-        value: isObject(value1) ? getObjectSchema(value1) : value1,
-      };
-    }
-
-    if (isObject(value1) && isObject(value2)) {
-      return {
-        key,
-        value: getDiffSchema(value1, value2),
+        value: isObject(value1) ? getDiffSchema(value1, value1) : value1,
       };
     }
 
@@ -57,8 +45,8 @@ const getDiffSchema = (obj1, obj2) => {
       status: 'changed',
       key,
       value: {
-        old: isObject(value1) ? getObjectSchema(value1) : value1,
-        new: isObject(value2) ? getObjectSchema(value2) : value2,
+        old: isObject(value1) ? getDiffSchema(value1, value1) : value1,
+        new: isObject(value2) ? getDiffSchema(value2, value2) : value2,
       },
     };
   });
