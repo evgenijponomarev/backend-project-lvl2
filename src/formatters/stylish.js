@@ -5,12 +5,13 @@ const { isArray } = _;
 const typeSign = {
   added: '+',
   removed: '-',
-  none: '',
+  unchanged: '',
+  nested: '',
 };
 
 const indent = '  ';
 
-const getStylishLine = (indentCount, key, value, type = 'none') => {
+const getStylishLine = (indentCount, key, value, type) => {
   const sign = typeSign[type];
   const prefix = `${sign}${indent.slice(sign.length)}`;
 
