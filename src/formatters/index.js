@@ -1,16 +1,15 @@
 import formatToStylish from './stylish.js';
 import formatToPlain from './plain.js';
+import formats from '../formats.js';
 
 const formatters = {
-  stylish: formatToStylish,
-  plain: formatToPlain,
-  json: JSON.stringify,
+  [formats.output.stylish]: formatToStylish,
+  [formats.output.plain]: formatToPlain,
+  [formats.output.json]: JSON.stringify,
 };
 
-export default (diffSchema, formatType = 'stylish') => {
+export default (diffSchema, formatType) => {
   const formatter = formatters[formatType];
-
-  if (!formatter) throw new Error('Unexpected format');
 
   return formatter(diffSchema);
 };
