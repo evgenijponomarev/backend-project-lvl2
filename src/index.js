@@ -2,9 +2,7 @@ import _ from 'lodash';
 
 const { uniq, sortBy, isObject } = _;
 
-const getDiffSchema = (obj1, obj2) => {
-  if (!isObject(obj1) && obj1 === obj2) return obj1;
-
+const buildDiffSchema = (obj1, obj2) => {
   const obj1Keys = Object.keys(obj1);
   const obj2Keys = Object.keys(obj2);
   const allKeys = sortBy(uniq([...obj1Keys, ...obj2Keys]));
@@ -17,7 +15,7 @@ const getDiffSchema = (obj1, obj2) => {
       return {
         type: 'added',
         key,
-        value: getDiffSchema(value2, value2),
+        value2,
       };
     }
 
@@ -25,7 +23,7 @@ const getDiffSchema = (obj1, obj2) => {
       return {
         type: 'removed',
         key,
-        value: getDiffSchema(value1, value1),
+        value1,
       };
     }
 
@@ -33,7 +31,7 @@ const getDiffSchema = (obj1, obj2) => {
       return {
         type: 'nested',
         key,
-        value: getDiffSchema(value1, value2),
+        value: buildDiffSchema(value1, value2),
       };
     }
 
@@ -41,19 +39,17 @@ const getDiffSchema = (obj1, obj2) => {
       return {
         type: 'changed',
         key,
-        value: {
-          old: getDiffSchema(value1, value1),
-          new: getDiffSchema(value2, value2),
-        },
+        value1,
+        value2,
       };
     }
 
     return {
       type: 'unchanged',
       key,
-      value: value1,
+      value1,
     };
   });
 };
 
-export default getDiffSchema;
+export default buildDiffSchema;

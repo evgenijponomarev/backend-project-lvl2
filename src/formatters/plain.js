@@ -1,17 +1,23 @@
 import _ from 'lodash';
 
-const { isArray, compact } = _;
+const { isObject, compact } = _;
 
-const formatValue = (value) => {
+const stringify = (value) => {
   if (typeof value === 'string') return `'${value}'`;
 
-  if (isArray(value)) return '[complex value]';
+  if (isObject(value)) return '[complex value]';
 
   return value;
 };
 
 const formatToPlain = (diffSchema, keys = []) => {
-  const diff = diffSchema.map(({ key, value, type }) => {
+  const diff = diffSchema.map(({
+    key,
+    type,
+    value1,
+    value2,
+    value,
+  }) => {
     const newKeys = [...keys, key];
     const keyPath = newKeys.join('.');
 
@@ -20,14 +26,14 @@ const formatToPlain = (diffSchema, keys = []) => {
     }
 
     if (type === 'added') {
-      return `Property '${keyPath}' was added with value: ${formatValue(value)}`;
+      return `Property '${keyPath}' was added with value: ${stringify(value2)}`;
     }
 
     if (type === 'changed') {
-      return `Property '${keyPath}' was updated. From ${formatValue(value.old)} to ${formatValue(value.new)}`;
+      return `Property '${keyPath}' was updated. From ${stringify(value1)} to ${stringify(value2)}`;
     }
 
-    if (isArray(value)) {
+    if (type === 'nested') {
       return formatToPlain(value, newKeys);
     }
 
