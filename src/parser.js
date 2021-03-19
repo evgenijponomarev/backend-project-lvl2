@@ -5,10 +5,12 @@ const parsers = {
   yml: jsYaml.load,
 };
 
+const allowedFormats = Object.keys(parsers);
+
 export default (data, format) => {
   const parser = parsers[format];
 
-  if (!parser) throw new Error(`Unexpected format of file. Expected json or yml, recieved ${format}`);
+  if (!parser) throw new Error(`Unexpected format of data. Expected ${allowedFormats.join(' or ')}, recieved ${format}`);
 
   return parser(data);
 };
