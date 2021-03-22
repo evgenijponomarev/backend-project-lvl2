@@ -3,84 +3,70 @@ import _ from 'lodash';
 const { isArray, isObject } = _;
 
 const indent = ' ';
-const indentSize = 2;
+const indentSize = 4;
+const removedSign = '- ';
+const addedSign = '+ ';
 
-const stringify = (node, lineIndentSize, bracketIndentSize) => {
+const stringify = (node, depth) => {
   if (!isObject(node)) return node;
 
   const lines = Object.entries(node)
     .map(([entryKey, entryValue]) => {
-      const nestedIndentSize = lineIndentSize + indentSize * 2;
-      const nestedBracketSize = bracketIndentSize + indentSize * 2;
-      const value = stringify(entryValue, nestedIndentSize, nestedBracketSize);
+      const value = stringify(entryValue, depth + 1);
 
-      return `${indent.repeat(lineIndentSize)}${entryKey}: ${value}`;
+      return `${indent.repeat(indentSize * depth)}${entryKey}: ${value}`;
     });
 
   return [
     '{',
     ...lines,
-    `${indent.repeat(bracketIndentSize)}}`,
+    `${indent.repeat(indentSize * depth - indentSize)}}`,
   ].join('\n');
 };
 
 const formatToStylish = (diffSchema) => {
   const iter = (schema, depth) => {
-    const currentIndentSize = indentSize * depth;
-    const currentIndent = indent.repeat(currentIndentSize);
+    const currentIndentLength = indentSize * depth;
+    const indentForUnchanged = indent.repeat(currentIndentLength);
+    const indentForRemoved = removedSign.padStart(currentIndentLength);
+    const indentForAdded = addedSign.padStart(currentIndentLength);
 
     if (!isArray(schema)) return schema;
 
-    const bracketIndent = indent.repeat(currentIndentSize - indentSize);
+    const bracketIndent = indent.repeat(currentIndentLength - indentSize);
 
     const lines = schema.flatMap((node) => {
-      const nestedIndendSize = currentIndentSize + indentSize * 3;
-      const nestedBracketSize = currentIndentSize + indentSize;
-
       if (node.type === 'changed') {
-        return [
-          [node.value1, '-'],
-          [node.value2, '+'],
-        ].map(([nodeValue, sign]) => {
-          const value = stringify(
-            nodeValue,
-            nestedIndendSize,
-            nestedBracketSize,
-          );
+        const value1 = stringify(node.value1, depth + 1);
+        const value2 = stringify(node.value2, depth + 1);
 
-          return `${currentIndent}${sign} ${node.key}: ${value}`;
-        });
+        return [
+          `${indentForRemoved}${node.key}: ${value1}`,
+          `${indentForAdded}${node.key}: ${value2}`,
+        ];
       }
 
       if (node.type === 'added') {
-        const value = stringify(
-          node.value2,
-          nestedIndendSize,
-          nestedBracketSize,
-        );
+        const value = stringify(node.value2, depth + 1);
 
-        return `${currentIndent}+ ${node.key}: ${value}`;
+        return `${indentForAdded}${node.key}: ${value}`;
       }
 
       if (node.type === 'removed') {
-        const value = stringify(
-          node.value1,
-          nestedIndendSize,
-          nestedBracketSize,
-        );
+        const value = stringify(node.value1, depth + 1);
 
-        return `${currentIndent}- ${node.key}: ${value}`;
+        return `${indentForRemoved}${node.key}: ${value}`;
       }
 
       if (node.type === 'nested') {
-        const value = iter(node.value, depth + indentSize);
+        const value = iter(node.value, depth + 1);
 
-        return `${currentIndent}  ${node.key}: ${value}`;
+        return `${indentForUnchanged}${node.key}: ${value}`;
       }
 
       const value = stringify(node.value1);
 
-      return `${currentIndent}  ${node.key}: ${value}`;
+      return `${indentForUnchanged}${node.key}: ${value}`;
     });
 
     return [
