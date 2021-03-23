@@ -11,8 +11,9 @@ const mainAction = (filepath1, filepath2, { format }) => {
     const diff = genDiff(filepath1, filepath2, format);
 
     console.log(diff);
-  } catch (e) {
-    console.log('Error:', e.message);
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
   }
 };
 
